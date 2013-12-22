@@ -1,0 +1,21 @@
+{
+    "name": "kandy/xhprof.me",
+    "description": "XHprof GUI project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrii Kasian",
+            "email": "to.kandy@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "ext-xhprof": "*",
+        "ext-PDO": "*",
+        "ext-pdo_sqlite": "*",
+        "silex/silex": "1.0.*@dev",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "~2.1"
+    }
+}
