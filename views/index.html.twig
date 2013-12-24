@@ -1,12 +1,31 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-   Hello
+    <table id="sortedTable" class="table">
+        <thead>
+            <tr>
+            {%  for key, row in rows[0] %}
+                <th>{{ key }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+            <tr>
+                {% for filed in row %}
+                <td>
+                    {{ filed }}
+                </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
-<script src="/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="{{ asset('/js/jquery.tablesorter.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
   $(function() {
     $("#sortedTable").tablesorter();

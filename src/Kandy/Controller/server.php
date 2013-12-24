@@ -1,17 +1,12 @@
 <?php
-
+use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 $server = $app['controllers_factory'];
 
 function save() {
 
     header("Connection: Close");
     flush();
-    //copy(
-    //    'compress.zlib://php://input',
-    //    __DIR__ . '/data/' . time() . '.json'
-    //);
     $url = 'compress.zlib://php://input';
-    //$url = 'data/1387720180.json';
 
     $data = json_decode(file_get_contents($url), true);
 
@@ -107,7 +102,7 @@ $server->get('/{api}.{format}', function($api, $format) use ($app) {
         'format' => $format,
     ];
     $result['success'] = 'true';
-    $response = new Symfony\Component\HttpFoundation\JsonResponse($result);
+    $response = new JsonResponse($result);
     $response->setStatusCode(200);
     return $response;
 

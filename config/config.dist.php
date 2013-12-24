@@ -1,4 +1,4 @@
 <?php
 return [
-    'dsn' => 'sqlite:data/test.sqlite3'
+    'dsn' => 'sqlite:../data/test.sqlite3',
 ];
