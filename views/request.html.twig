@@ -1,0 +1,42 @@
+{% extends "grid.html.twig" %}
+{% block broadcarms %}
+    {{ parent() }}
+<li>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    <a href="{{ path('request', {request: request.id}) }}">
+        {{ request.request_host }}{{ request.request_uri }}
+    </a>
+</li>
+{% endblock %}
+{% block columns %}
+[
+  {id: "call", name: "call", field: "callee", minWidth: 400, sortable: true, cssClass: "cell-call",
+    formatter: function(column, row, data) {
+        var namesPart = data.split('::');
+        var fname ='<b class="cell-p-fname">' +  namesPart.pop() + '</b>';
+        namesPart = namesPart.length ? namesPart.pop().split(/\\|_/) : namesPart;
+
+        var className = namesPart.length ? '<b class="cell-p-class">' + namesPart.pop() + '</b>' : '';
+        var vendor = namesPart.length ? '<b class="cell-p-vendor">' + namesPart.splice(0, 1) + '</b>' : '';
+        var path = namesPart.length ? '<b class="cell-p-path">' + namesPart.join('::') + '</b>' : '';
+
+        return vendor + path + className + fname;
+
+    }
+
+   },
+  {id: "count", name: "Count", field: "ct", minWidth: 100, sortable: true },
+  {id: "ftime", name: "Full Time", field: "fwt", minWidth: 100, sortable: true },
+  {id: "time", name: "Main Time", field: "wt", minWidth: 100, sortable: true },
+  {id: "percent", name: "%", field: "mu", minWidth: 100, sortable: true, cssClass: "cell-percent",
+    formatter: function(column, row, data) {  return "<b>" + (
+        Math.round(data*100)/100).toFixed(2) +
+        "</b><i>%</i>" +
+        '<span class="percent-complete-bar" style="background:hsl(' +
+        160 + 200*(data/100) + ',100%,50%); width:' +
+        60 * Math.sqrt(data/100) +
+        '%"></span>';
+    ; }},
+]
+{% endblock %}
+

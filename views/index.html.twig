@@ -1,43 +1,14 @@
-{% extends "base.html.twig" %}
-
-{% block content %}
-    <div data-role="requests-grid"></div>
+{% extends "grid.html.twig" %}
+{% block columns %}
+[
+  {id: "id", name: "#", field: "id", width: 40},
+  {id: "host", name: "Host", field: "request_host", minWidth: 120},
+  {id: "uri", name: "URI", field: "request_uri", minWidth: 400, sortable: true,
+    formatter: function(column, rownum, value, config, row) {
+      return '<a href="request/' + row.id + '">' + value + '</a>';
+    }
+  },
+  {id: "date", name: "Date", field: "request_timestamp", formatter: function(column, row, data) { return moment(data * 1000).fromNow(); } }
+];
 {% endblock %}
 
-{% block javascripts %}
-{{ parent() }}
-    <link rel="stylesheet" href="{{ asset('/css/jquery-ui-1.9.2.custom.css') }}" type="text/css"/>
-    <link rel="stylesheet" href="{{ asset('/css/slick.grid.css') }}" type="text/css"/>
-    <script src="{{ asset('/js/jquery.tablesorter.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/jquery.event.drag-2.2.js') }}" type="text/javascript"></script>
-
-
-    <script src="{{ asset('/js/slick/slick.core.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/slick/slick.formatters.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/js/slick/slick.grid.js') }}" type="text/javascript"></script>
-
-
-    <script type="text/javascript">
-      jQuery(function($){
-          var rows = {{ rows|json_encode()|raw }} || [];
-          var columns = [
-              {id: "id", name: "#", field: "id", width: 40},
-              {id: "host", name: "Host", field: "request_host", minWidth: 120},
-              {id: "uri", name: "URI", field: "request_uri", minWidth: 400, sortable: true },
-              {id: "date", name: "Date", field: "request_timestamp", formatter: function(column, row, data) { return moment(data * 1000).fromNow(); } }
-          ];
-          var $gridContainer = $('[data-role="requests-grid"]');
-          $gridContainer.data('grid',  new Slick.Grid(
-            $gridContainer,
-            rows
-          , columns
-          //, options
-          ));
-          $(window).on('resize',function() {
-              $gridContainer.css({'height': ($(window).height() - 120) + 'px'}).data('grid').resizeCanvas();
-          }).trigger('resize');
-
-      });
-    </script>
-{% endblock %}

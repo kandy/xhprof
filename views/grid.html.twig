@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <div data-role="grid"></div>
+{% endblock %}
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/jquery-ui-1.9.2.custom.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('/css/slick.grid.css') }}" type="text/css"/>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset('/js/jquery.tablesorter.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/jquery-ui-1.9.2.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/jquery.event.drag-2.2.js') }}" type="text/javascript"></script>
+
+
+    <script src="{{ asset('/js/slick/slick.core.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/slick/slick.formatters.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/slick/slick.grid.js') }}" type="text/javascript"></script>
+
+    {% block grid %}
+    <script type="text/javascript">
+      jQuery(function($){
+          var data = {{ rows|json_encode()|raw }} || [];
+
+          var columns = {% block columns %}[
+              {id: "id", name: "#", field: "id", width: 40},
+              {id: "host", name: "Host", field: "request_host", minWidth: 120},
+              {id: "uri", name: "URI", field: "request_uri", minWidth: 400, sortable: true },
+              {id: "date", name: "Date", field: "request_timestamp", formatter: function(column, row, data) { return moment(data * 1000).fromNow(); } }
+          ];
+          {% endblock %}
+          {% block options %}
+          var options = {{ options|json_encode()|raw }}
+          {% endblock %}
+          var $gridContainer = $('[data-role="grid"]');
+          var grid = new Slick.Grid(
+                  $gridContainer,
+                  data,
+                  columns,
+                  options
+          );
+          $gridContainer.data('grid', grid);
+          grid.onSort.subscribe(function(e, args) {
+              var cols = args.multiColumnSort ? args.sortCols : [args];
+
+              data.sort(function(dataRow1, dataRow2) {
+                  for (var i = 0, l = cols.length; i < l; i++) {
+                      var field = cols[i].sortCol.field;
+                      var sign = cols[i].sortAsc ? 1 : -1;
+                      var value1 = parseFloat(dataRow1[field]), value2 = parseFloat(dataRow2[field]);
+                      var result = (value1 == value2 ? 0 : (value1 > value2 ? 1 : -1)) * sign;
+                      if (result != 0) {
+                          return result;
+                      }
+                  }
+                  return 0;
+              });
+              grid.invalidate();
+              grid.render();
+          });
+          $(window).on('resize',function() {
+              $gridContainer.css({'height': ($(window).height()) + 'px'}).data('grid').resizeCanvas();
+          }).trigger('resize');
+
+      });
+    </script>
+    {% endblock %}
+{% endblock %}

@@ -95,7 +95,7 @@ function save() {
 }
 
 $server->get('/{api}.{format}', function($api, $format) use ($app) {
-    save();
+    //save();
 
     $result = [
         'method' => $api,

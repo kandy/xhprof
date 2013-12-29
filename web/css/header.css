@@ -1,0 +1,396 @@
+/* header*/
+#header {
+    display: block;
+    height: 49px;
+    position: relative;
+    margin: 0;
+    padding: 0 13px 0 0;
+    background-color: #ececec;
+    background-image: -moz-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f3f3f3), to(#e2e2e2));
+    background-image: -webkit-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: -o-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
+    background-repeat: repeat-x
+}
+
+#header > div {
+    display: inline-block;
+    vertical-align: middle;
+    height: 49px;
+}
+
+#header > div.open {
+    font-weight: bold
+}
+
+.fixed-header #header {
+    position: fixed;
+    width: 100%;
+    z-index: 1001
+}
+
+.container.fixed-header #header {
+    max-width: 1164px
+}
+
+.fixed-header #header .ajax-dropdown {
+    z-index: 1000
+}
+
+.fixed-header #shortcut {
+    position: fixed
+}
+
+.fixed-header #main {
+    margin-top: 49px
+}
+
+#logo-group > span {
+    display: inline-block;
+    height: 39px;
+    float: left
+}
+
+#logo-group span#activity {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    cursor: default !important;
+    display: inline-block;
+    font-weight: bold;
+    height: 24px;
+    width: 24px;
+    padding: 2px;
+    text-align: center;
+    text-decoration: none !important;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    background-color: #f8f8f8;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -ms-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+    background-image: linear-gradient(top, #f8f8f8, #f1f1f1);
+    border: 1px solid #c6c6c6;
+    color: #c4bab6;
+    font-size: 19px;
+    margin: 10px 0 0 0;
+    position: relative
+}
+
+#logo-group span#activity:hover {
+    border: 1px solid #c6c6c6;
+    transition: all 0;
+    cursor: pointer !important;
+    -webkit-box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.08)
+}
+
+#logo {
+    display: inline-block;
+    width: 175px;
+    margin-top: 3px;
+    margin-left: 9px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#logo img {
+    width: 32px;
+    height: 32px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+}
+
+#logo-group > span .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    cursor: pointer;
+    background: #2a89c9;
+    display: inline-block;
+    font-size: 10px;
+    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07);
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    padding: 2px 4px 3px 4px;
+    text-align: center;
+    line-height: normal
+}
+
+#activity.active .badge {
+    background: #1485c5 !important
+}
+
+#project-context {
+    display: inline-block;
+    padding: 7px 13px 0;
+    position: relative
+}
+
+#project-context > span {
+    display: block
+}
+
+#project-context > :first-child {
+    display: block;
+    color: #c7c5be;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px white;
+    padding-left: 0;
+    text-align: left
+}
+
+#project-selector {
+    max-width: 97%;
+    white-space: nowrap;
+    background: 0;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    color: #787878;
+    font-size: 14px;
+    cursor: pointer
+}
+
+#project-selector:hover {
+    color: #333
+}
+
+.header-search {
+    position: relative
+}
+
+.header-search.pull-right {
+    margin-left: 6px
+}
+
+.header-search > input[type="text"] {
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    min-width: 200px;
+    width: 100%;
+    height: 30px;
+    padding: 8px 10px;
+    outline: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0;
+    border-color: #c6c6c6;
+    background: #fff;
+    font: 13px/16px 'Open Sans', Helvetica, Arial, sans-serif;
+    color: #404040;
+    appearance: normal;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin-top: 10px
+}
+
+.header-search > button {
+    background: 0;
+    border: 0;
+    color: #6d6a69;
+    font-size: 17px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    width: 30px;
+    z-index: 2
+}
+
+#search-mobile {
+    display: none
+}
+
+#cancel-search-js {
+    position: absolute;
+    display: none;
+    background: #a90329;
+    z-index: 3;
+    color: #fff;
+    padding: 0;
+    right: 10px;
+    top: 10px;
+    text-align: center;
+    height: 29px;
+    line-height: 29px;
+    width: 30px;
+    font-size: 17px;
+    text-decoration: none !important
+}
+
+#header > :first-child, aside {
+    width: 220px
+}
+
+
+
+
+/* ajax-dropdown*/
+
+.ajax-dropdown > :first-child {
+    margin: 0 0 3px 0;
+    padding: 0 0 9px 0
+}
+
+.ajax-dropdown {
+    position: absolute;
+    display: none;
+    z-index: 506;
+    background: white;
+    top: 48px;
+    left: 16px;
+    width: 344px;
+    height: 435px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-box-shadow: 0 2px 4px rgba(30, 30, 100, 0.25);
+    -moz-box-shadow: 0 2px 4px rgba(30, 30, 100, 0.25);
+    box-shadow: 0 2px 4px rgba(30, 30, 100, 0.25);
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #b3b3b3
+}
+
+.ajax-dropdown:after, .ajax-dropdown:before {
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+}
+
+.ajax-dropdown:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #fff;
+    border-width: 7px;
+    left: 50%;
+    margin-left: -7px
+}
+
+.ajax-dropdown:before {
+    border-color: rgba(131, 131, 131, 0);
+    border-bottom-color: #838383;
+    border-width: 8px;
+    left: 50%;
+    margin-left: -8px
+}
+
+.ajax-dropdown .btn-group .btn {
+    font-weight: bold;
+    text-transform: capitalize
+}
+
+.ajax-dropdown .btn-group > :nth-child(2) {
+    border-right-width: 0;
+    border-left-width: 0
+}
+
+.ajax-dropdown .btn-group .btn:active {
+    top: 0;
+    left: 0
+}
+
+.ajax-notifications {
+    height: 365px;
+    display: block;
+    overflow: auto;
+    margin-right: -10px;
+    margin-left: -10px;
+    border-bottom: 1px solid #cecece;
+    border-top: 1px solid #cecece;
+    background: #e9e9e9
+}
+
+.ajax-notifications > .alert.alert-transparent {
+    background-color: transparent;
+    border-color: transparent;
+    color: #757575;
+    margin: 13px 10px
+}
+
+.ajax-notifications > .alert > :first-child {
+    margin-bottom: 10px;
+    font-weight: 400
+}
+
+.ajax-dropdown > :last-child {
+    font-size: 13px;
+    display: block;
+    padding: 5px 0;
+    line-height: 22px;
+    font-weight: 400
+}
+
+.ajax-dropdown .fa-4x.fa-border {
+    border-width: 3px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+    width: 46px;
+    text-align: center;
+    color: #d1d1d1;
+    border-color: #d1d1d1
+}
+
+
+/* #project-selector ---------------------------------------------- */
+#project-context {
+    display: inline-block;
+    padding: 7px 13px 0;
+    position: relative
+}
+
+#project-context > span {
+    display: block
+}
+
+#project-context > :first-child {
+    display: block;
+    color: #c7c5be;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px white;
+    padding-left: 0;
+    text-align: left
+}
+
+#project-selector {
+    max-width: 97%;
+    white-space: nowrap;
+    background: 0;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    color: #787878;
+    font-size: 14px;
+    cursor: pointer
+}
+
+#project-selector:hover {
+    color: #333
+}
+
+/* broudcrams*/
+
+#header .breadcrumb {
+    display: inline-block;
+}
