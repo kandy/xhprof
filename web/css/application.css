@@ -136,7 +136,9 @@ aside {
     font-weight: normal;
 
 }
-
+.cell-int {
+    text-align: right;
+}
 .cell-p-class {
     color: #888;
     margin-right: 3px;
@@ -148,4 +150,29 @@ aside {
 }
 .cell-p-fname{
  text-align: left;
+}
+
+.ui-state-default{
+    background-image: inherit;
+}
+.slick-headerrow-column {
+    background: none;
+    text-overflow: clip;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.slick-headerrow-column input {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: #e6e6e6;
+    border: none;
+}
+
+.slick-headerrow-column input:focus {
+    background-color: #eeeeee;
+    border: inherit;
 }

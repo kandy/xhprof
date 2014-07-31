@@ -2,20 +2,17 @@
 use Symfony\Component\HttpFoundation\JsonResponse as JsonResponse;
 $server = $app['controllers_factory'];
 
-function save() {
+function save($db) {
 
     header("Connection: Close");
     flush();
     $url = 'compress.zlib://php://input';
+    $url = 'php://input';
+    $data = file_get_contents($url);
+    $data = json_decode($data, true);
 
-    $data = json_decode(file_get_contents($url), true);
 
-    $db = new PDO('sqlite:data/test.sqlite3');
-    // Set errormode to exceptions
-    $db->setAttribute(
-        PDO::ATTR_ERRMODE,
-        PDO::ERRMODE_EXCEPTION
-    );
+
     $db->beginTransaction();
     $db->prepare(
         "
@@ -62,11 +59,7 @@ function save() {
         "
     );
     $trim = function ($name) {
-        if (strpos($name, '@')) {
-            return explode('@', $name, 2)[0];
-        } else {
-            return $name;
-        }
+           return $name;
     };
     foreach ($data as $call => $row) {
         $call = explode('==>', $call);
@@ -94,8 +87,8 @@ function save() {
     $db->commit();
 }
 
-$server->get('/{api}.{format}', function($api, $format) use ($app) {
-    //save();
+$server->post('/{api}.{format}', function($api, $format) use ($app) {
+    save($app['db']);
 
     $result = [
         'method' => $api,
@@ -112,23 +105,4 @@ $server->get('/{api}.{format}', function($api, $format) use ($app) {
     ->assert('format', 'json|jsonp')
     ->bind('server');
 
-/*
-
-SELECT
-  c.callee,
-  (c.wt - total(cc.wt) + 0.0) / 1000.0 AS time_main,
-  (c.cpu - total(cc.cpu) + 0.0) / 1000.0 AS cpu_main
-FROM "calls" AS c
-  LEFT JOIN "calls" AS cc
-    ON (cc.request_id = c.request_id
-        AND c.callee = cc.caller
-  )
-WHERE
-  c.request_id = 5
-GROUP BY
-  c.callee
-ORDER BY time_main DESC ;
-
-
- */
 return $server;

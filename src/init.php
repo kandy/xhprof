@@ -27,6 +27,7 @@ $app['twig'] = $app->share(
         }
     )
 );
+
 $app['db'] = $app->share(function($app){
     $db = new PDO($app['params']['dsn']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

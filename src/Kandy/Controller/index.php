@@ -25,40 +25,52 @@ $app->get(
         $db = $app['db'];
         $st = $db->prepare('
             SELECT
+              c.id,
+              c.id - (
+                select min(id)
+                  from calls
+                  where request_id = :id
+              )  as num,
               c.callee,
-              total(c.wt)  as fwt,
-              (total(c.wt) - ifnull(cc.wt, 0)) AS wt,
-              total(c.wt) * 100 / (
+              c.caller,
+              c.wt  as wt,
+              c.wt  as fwt,
+              (c.wt) * 100 / (
                 select wt
                   from calls
                   where request_id = :id
                   and callee="main()"
               )  as mu,
-              total(c.ct) as ct
+              c.ct as ct
             FROM "calls" AS c
-              LEFT JOIN (
-                  select total(wt) as wt, request_id, caller
-                  from "calls"
-                  where request_id = :id
-                  group by caller
-              ) AS cc
-              ON (cc.request_id = c.request_id
-                    AND c.callee = cc.caller
-              )
             WHERE
               c.request_id = :id
-            group by callee
-            ORDER BY wt DESC ;
+            order by c.id desc
         ');
         $st->bindValue(':id', $request->id);
         $st->execute();
+        $rows = $st->fetchAll(PDO::FETCH_ASSOC);
+        $stack = [&$rows[count($rows) - 1]];
+        array_walk($rows, function(&$el, $key) use(&$stack, &$rows) {
+            while (count($stack) > 1  // todo: use for
+                && $stack[count($stack)-1]['callee'] != $el['caller']
+            ) {
+                array_pop($stack);
+            }
+            $el['l'] = count($stack) - 1;
+            if ($stack[$el['l']]['callee'] == $el['caller']) {
+                $stack[$el['l']]['wt'] -= $el['wt'];
+            }
+            $stack[] = &$el;
+            return $el;
+        });
         $result = [
             'options' => [
                 'enableCellNavigation' => false,
                 'forceFitColumns' => true,
             ],
             'request' => $request,
-            'rows' => $st->fetchAll(PDO::FETCH_ASSOC)
+            'rows' => $rows
         ];
         return $app['twig']->render('request.html.twig', $result);
     }
@@ -69,4 +81,7 @@ $app->get(
     $st->execute(['id'=> $request_id]);
     return $st->fetch(PDO::FETCH_OBJ);
 })->bind('request');
+
+
+
 return $index;

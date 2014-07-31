@@ -10,6 +10,7 @@
 {% endblock %}
 {% block columns %}
 [
+  {id: "id", name: "#", field: "id", minWidth: 20, width: 40, sortable: true },
   {id: "call", name: "call", field: "callee", minWidth: 400, sortable: true, cssClass: "cell-call",
     formatter: function(column, row, data) {
         var namesPart = data.split('::');
@@ -18,23 +19,30 @@
 
         var className = namesPart.length ? '<b class="cell-p-class">' + namesPart.pop() + '</b>' : '';
         var vendor = namesPart.length ? '<b class="cell-p-vendor">' + namesPart.splice(0, 1) + '</b>' : '';
-        var path = namesPart.length ? '<b class="cell-p-path">' + namesPart.join('::') + '</b>' : '';
+        var path = namesPart.length ? '<b class="cell-p-path">' + namesPart.join(' / ') + '</b>' : '';
 
         return vendor + path + className + fname;
 
     }
-
    },
-  {id: "count", name: "Count", field: "ct", minWidth: 100, sortable: true },
-  {id: "ftime", name: "Full Time", field: "fwt", minWidth: 100, sortable: true },
-  {id: "time", name: "Main Time", field: "wt", minWidth: 100, sortable: true },
-  {id: "percent", name: "%", field: "mu", minWidth: 100, sortable: true, cssClass: "cell-percent",
+    {id: "caller", name: "caller", field: "caller"},
+  {id: "count", name: "Count", field: "ct", minWidth: 40, css: 'align: right', width: 40, sortable: true, cssClass: "cell-int" ,formatter: function(column, row, data) { return parseFloat(data).toFixed(0).replace(/./g, function(c, i, a) {
+    return i && c !== "." && !((a.length - i) % 3) ? ' ' + c : c;
+    }); }},
+  {id: "ftime", name: "Full Time", field: "fwt", width: 60, sortable: true, cssClass: "cell-int" ,formatter: function(column, row, data) { return parseFloat(data).toFixed(0).replace(/./g, function(c, i, a) {
+    return i && c !== "." && !((a.length - i) % 3) ? ' ' + c : c;
+    }); } },
+  {id: "time", name: "Main Time", field: "wt", width: 60, sortable: true, cssClass: "cell-int"
+    ,formatter: function(column, row, data) { return parseFloat(data).toFixed(0).replace(/./g, function(c, i, a) {
+    return i && c !== "." && !((a.length - i) % 3) ? ' ' + c : c;
+    }); } },
+  {id: "percent", name: "%", field: "mu", minWidth: 120, sortable: true, cssClass: "cell-percent",
     formatter: function(column, row, data) {  return "<b>" + (
         Math.round(data*100)/100).toFixed(2) +
         "</b><i>%</i>" +
         '<span class="percent-complete-bar" style="background:hsl(' +
         160 + 200*(data/100) + ',100%,50%); width:' +
-        60 * Math.sqrt(data/100) +
+        50 * Math.sqrt(data/100) +
         '%"></span>';
     ; }},
 ]

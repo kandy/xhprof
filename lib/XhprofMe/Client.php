@@ -6,27 +6,26 @@ class Client
     /**
      * Init profiling
      */
-    static public function init()
+    static public function init($url)
     {
         xhprof_enable(XHPROF_FLAGS_MEMORY | XHPROF_FLAGS_CPU);
         register_shutdown_function(
-            function () {
+            function () use ($url) {
                 if (function_exists('fastcgi_finish_request')) {
                     fastcgi_finish_request();
                 }
-                $data = gzencode(json_encode(xhprof_disable(), JSON_PRETTY_PRINT));
+                $data = json_encode(xhprof_disable(), JSON_PRETTY_PRINT);
+               // $data = gzencode($json);
 
-                $url = 'http://localhost/workspace/xhprof.my/?' . http_build_query(
+                $url = $url . '?' . http_build_query(
                         array(
                             'host' => $_SERVER['HTTP_HOST'],
-                            'uri' => $_SERVER['REQUEST_URI'],
+                            'uri' => $_SERVER['PATH_INFO'],
                             'timestamp' => $_SERVER['REQUEST_TIME'],
                         )
                     );
                 $context_options = array(
                     'http' => array(
-                        'protocol_version' => 1.1,
-                        'timeout' => 0.1,
                         'method' => 'POST',
                         'header' => implode(
                                 "\r\n",
@@ -34,7 +33,7 @@ class Client
                                     "Content-encoding: gzip",
                                     "Content-type: application/json",
                                     "Content-length: " . strlen($data),
-                                    "Connection: Close",
+                                 //   "Cookie: XDEBUG_SESSION=phpstorm",
                                 )
                             ) . "\r\n",
                         'content' => $data
