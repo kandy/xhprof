@@ -2,7 +2,15 @@
     Options -MultiViews
 
     RewriteEngine On
-    #RewriteBase /path/to/app
+    
+    RewriteBase /workspace/xhprof.me/web
+    
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+############################################
+## rewrite everything else to index.php
+
+    RewriteRule .* index.php [L]
 </IfModule>

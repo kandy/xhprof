@@ -50,20 +50,30 @@ $app->get(
         $st->bindValue(':id', $request->id);
         $st->execute();
         $rows = $st->fetchAll(PDO::FETCH_ASSOC);
-        $stack = [&$rows[count($rows) - 1]];
+        $stack = [];
+        $stack[] = end($rows);
+        $stack[0]['mt'] = $stack[0]['wt'];
         array_walk($rows, function(&$el, $key) use(&$stack, &$rows) {
             while (count($stack) > 1  // todo: use for
-                && $stack[count($stack)-1]['callee'] != $el['caller']
+                && end($stack)['callee'] != $el['caller']
             ) {
                 array_pop($stack);
             }
-            $el['l'] = count($stack) - 1;
-            if ($stack[$el['l']]['callee'] == $el['caller']) {
-                $stack[$el['l']]['wt'] -= $el['wt'];
+            $el['l'] = count($stack)-1;
+            if (!is_null($el['caller']) && $stack[$el['l']]['callee'] == $el['caller']) {
+                $stack[$el['l']]['mt'] -= $el['wt'];
             }
             $stack[] = &$el;
+            $el['mt'] = $el['wt'];
             return $el;
         });
+        $trim = function ($name) {
+            if (strpos($name, '@')) {
+                return explode('@', $name, 2)[0];
+            } else {
+                return $name;
+            }
+        };
         $result = [
             'options' => [
                 'enableCellNavigation' => false,

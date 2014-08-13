@@ -58,11 +58,7 @@ $sth1 = $db->prepare("
     );
 ");
 $trim = function ($name) {
-    if (strpos($name,'@')) {
-        return explode('@', $name, 2)[0];
-    } else {
-        return $name;
-    }
+    return $name;
 };
 foreach ($data as $call => $row) {
     $call = explode('==>', $call);
