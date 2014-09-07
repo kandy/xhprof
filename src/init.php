@@ -1,6 +1,7 @@
 <?php
-
-require_once __DIR__.'/../vendor/autoload.php';
+/** @var  \Composer\Autoload\ClassLoader $autoload  */
+$autoload = require_once __DIR__.'/../vendor/autoload.php';
+$autoload->add('XhprofMe', __DIR__. '/../lib'); //@todo add to composer
 
 $app = new Silex\Application();
 $app['debug'] = true;
