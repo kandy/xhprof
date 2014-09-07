@@ -62,7 +62,7 @@ $trim = function ($name) {
 };
 foreach ($data as $call => $row) {
     $call = explode('==>', $call);
-    if (count($call) == 1) {
+    if (count($call) === 1) {
         $caller = null;
         $callee = $trim($call[0]);
     } else {
